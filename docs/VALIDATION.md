@@ -14,10 +14,19 @@ Version: 0.1.0-beta.1. Date: 2026-11-12.
 
 ## Home Assistant verification
 
-Linux CI runs against the Home Assistant version selected by the current
-`pytest-homeassistant-custom-component` package. Tests load the actual integration and
-exercise entity lifecycle, selection options and reconfiguration. Local Windows checks
-alone do not constitute a successful Home Assistant lifecycle test.
+- **7 Home Assistant tests passed** on Home Assistant **2026.10.4**, Python **3.14.10**, Linux.
+- The actual integration was loaded. The suite verified complete setup including the
+  background scan and selection form, independent entity identities and values,
+  adding/removing entities through reload, per-logger unavailable states, saved
+  selections, duplicate prevention, offline options and endpoint reconfiguration.
+- Home Assistant's **hassfest validation passed** for manifest and translation metadata.
+- **22 protocol tests, compilation, lint and ZIP creation passed** in Linux CI.
+- [Successful verification run](https://github.com/pmfpedrosa/huawei-smartlogger/actions/runs/43239073812)
+  tested implementation commit `bae6aaa9f4d0113493d17b6407febb5098161e4d`.
+
+The declared 2025.3 API baseline was reviewed against upstream definitions. The full
+runtime suite has been executed against 2026.10.4; earlier HA releases have not been
+individually commissioned. CI follows the HA version selected by the test plugin.
 
 ## Hardware commissioning still required
 
