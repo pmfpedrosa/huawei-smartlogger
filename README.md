@@ -15,6 +15,9 @@ Independent project; not affiliated with Huawei or Home Assistant.
 4. Download **Huawei SmartLogger** and restart Home Assistant.
 5. Open **Settings → Devices & services → Add integration → Huawei SmartLogger**.
 
+This first release is a prerelease. If it is hidden by HACS, enable **Show beta versions**
+in the repository menu and select **0.1.0-beta.1**, or use the manual-install ZIP below.
+
 This is an integration installed into Home Assistant Core, including on HAOS.
 It does not install as a Supervisor app/add-on. It is available through HACS's
 custom-repository option; default HACS catalogue inclusion is a separate process.

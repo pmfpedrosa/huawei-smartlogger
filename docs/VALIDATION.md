@@ -20,6 +20,8 @@ Version: 0.1.0-beta.1. Date: 2026-11-12.
   adding/removing entities through reload, per-logger unavailable states, saved
   selections, duplicate prevention, offline options and endpoint reconfiguration.
 - Home Assistant's **hassfest validation passed** for manifest and translation metadata.
+- **HACS validation passed** after adding repository topics. The official brands check
+  is excluded because this is a custom repository without an upstream brands submission.
 - **22 protocol tests, compilation, lint and ZIP creation passed** in Linux CI.
 - [Successful verification run](https://github.com/pmfpedrosa/huawei-smartlogger/actions/runs/43239073812)
   tested implementation commit `bae6aaa9f4d0113493d17b6407febb5098161e4d`.
