@@ -95,6 +95,7 @@ class Simulation:
         self.by_key = {row["key"]: row for row in self.rows}
         self.unit_id, self.devices, self.serial = unit_id, devices, serial
         self.lock = threading.RLock()
+        self.shutdown = threading.Event()
         self.controls = dict(power_kw=50.0, load_kw=60.0, temperature=28.0, vary=False, fault="online")
         self.overrides = {}
         self.unsupported = set()
@@ -242,6 +243,8 @@ class Simulation:
             except (ValueError, OverflowError):
                 self.controls, self.overrides, self.unsupported = old
                 raise
+            if data.get("shutdown") is True:
+                self.shutdown.set()
 
     def state(self):
         with self.lock:
@@ -389,7 +392,10 @@ async def run(args):
         webbrowser.open(url)
     try:
         async with server:
-            await server.serve_forever()
+            # A cooperative stop also lets the frozen single-file launcher clean
+            # up its child process and temporary runtime directory normally.
+            while not simulation.shutdown.is_set():
+                await asyncio.sleep(0.2)
     finally:
         control.shutdown()
         control.server_close()

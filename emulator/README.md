@@ -6,8 +6,9 @@ its Python runtime and extracts temporary runtime files while running. It needs 
 internet connection. Target: Windows 10/11, 64-bit x86 (x64).
 
 A local control page opens in your browser. Keep the console window open; closing
-the browser tab does not stop the server. Press **Ctrl+C** in the console or close
-the console window to stop it. Simulation settings reset when you launch it again.
+the browser tab does not stop the server. Use **Stop emulator** on the control page,
+press **Ctrl+C** in the console or close the console window to stop it.
+Simulation settings reset when you launch it again.
 
 ## Connect Home Assistant
 

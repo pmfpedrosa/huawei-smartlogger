@@ -105,13 +105,13 @@ def main():
         print("PASS: portable EXEs, localhost control pages, overrides and independent TCP sessions")
     finally:
         for process, _port, _url in instances:
-            # A one-file Windows bootloader owns a child process; close the whole
-            # test process tree, rather than leaving the child server running.
-            subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
-                           capture_output=True, check=False)
+            with suppress(OSError, ValueError):
+                update(_url, {"shutdown": True})
             with suppress(subprocess.TimeoutExpired):
                 process.wait(timeout=5)
             if process.poll() is None:
+                subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                               capture_output=True, check=False)
                 process.kill()
                 process.wait(timeout=5)
 

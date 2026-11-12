@@ -2,6 +2,7 @@
 
 import asyncio
 from contextlib import suppress
+from unittest.mock import patch
 
 from homeassistant.helpers import entity_registry as er
 from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -14,7 +15,10 @@ ENERGY = "logger:0:40560"
 
 
 async def test_two_emulators_with_actual_home_assistant(hass, socket_enabled):
-    simulations = [Simulation(serial="SIM3000-A"), Simulation(serial="SIM3000-B")]
+    # Inventory is irrelevant to a loopback test; HA deliberately blocks DNS.
+    # All Modbus sockets and register replies below remain real and unmocked.
+    with patch("emulator.server.computer_addresses", return_value=["127.0.0.1"]):
+        simulations = [Simulation(serial="SIM3000-A"), Simulation(serial="SIM3000-B")]
     simulations[1].update({"power_kw": 75})
     servers = []
     entries = []
