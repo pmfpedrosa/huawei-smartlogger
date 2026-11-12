@@ -1,0 +1,81 @@
+{
+  "title": "Huawei SmartLogger",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect a SmartLogger",
+        "description": "Enter this SmartLogger's connection parameters. The documented logger unit ID is 0. Optional downstream profiles: meter:1, emi:2, inverter_remap:3 or emi_remap:4 (separate with commas or new lines).",
+        "data": {
+          "name": "Connection name",
+          "host": "IP address or hostname",
+          "port": "TCP port",
+          "unit_id": "SmartLogger Modbus unit ID",
+          "timeout": "Request timeout (seconds)",
+          "retries": "Retries after communication failure",
+          "request_delay": "Minimum request spacing (seconds)",
+          "poll_interval": "Polling interval (seconds)",
+          "devices": "Optional downstream devices"
+        }
+      },
+      "reconfigure": {
+        "title": "Edit SmartLogger connection",
+        "description": "Enter this SmartLogger's connection parameters. The documented logger unit ID is 0. Optional downstream profiles: meter:1, emi:2, inverter_remap:3 or emi_remap:4 (separate with commas or new lines).",
+        "data": {
+          "name": "Connection name",
+          "host": "IP address or hostname",
+          "port": "TCP port",
+          "unit_id": "SmartLogger Modbus unit ID",
+          "timeout": "Request timeout (seconds)",
+          "retries": "Retries after communication failure",
+          "request_delay": "Minimum request spacing (seconds)",
+          "poll_interval": "Polling interval (seconds)",
+          "devices": "Optional downstream devices"
+        }
+      },
+      "variables": {
+        "title": "Select variables",
+        "description": "{scan_status}. {count} readable variables are listed below. Labels show device / variable | register | data type | source unit | current value or error. Choose the variables to create as entities; an empty selection is allowed. To refresh the snapshot, check Refresh values and submit, then submit again with refresh unchecked to save.\n\nCommands and reserved variables (not selectable):\n{excluded}",
+        "data": {
+          "variables": "Variables to expose as entities",
+          "refresh": "Refresh values before saving"
+        }
+      }
+    },
+    "progress": {
+      "reading_registers": "Reading the documented variables. Unsupported registers will be marked individually. This may take a few minutes with downstream devices."
+    },
+    "error": {
+      "cannot_connect": "Could not communicate with the SmartLogger. Check host, port, unit ID, Modbus enablement and permitted client IP.",
+      "no_registers": "The device responded but no documented SmartLogger register could be read. Check unit ID, address mode and firmware.",
+      "invalid_settings": "Enter a name and host, and valid downstream profiles. Each address must be 1–247, appear only once, and not conflict with the logger's direct unit ID.",
+      "already_configured": "This host, port and unit ID already have a connection.",
+      "invalid_selection": "The variable selection contains an unknown register. Refresh and select again."
+    },
+    "abort": {
+      "already_configured": "This SmartLogger connection is already configured.",
+      "reconfigure_successful": "The SmartLogger connection was updated."
+    }
+  },
+  "options": {
+    "step": {
+      "variables": {
+        "title": "Select variables",
+        "description": "{scan_status}. {count} readable variables are listed below. Labels show device / variable | register | data type | source unit | current value or error. Choose the variables to create as entities; an empty selection is allowed. To refresh the snapshot, check Refresh values and submit, then submit again with refresh unchecked to save.\n\nCommands and reserved variables (not selectable):\n{excluded}",
+        "data": {
+          "variables": "Variables to expose as entities",
+          "refresh": "Refresh values before saving"
+        }
+      }
+    },
+    "progress": {
+      "reading_registers": "Refreshing the variable catalogue and current values for this connection."
+    },
+    "error": {
+      "cannot_connect": "Could not communicate with the SmartLogger. Check host, port, unit ID, Modbus enablement and permitted client IP.",
+      "no_registers": "The device responded but no documented SmartLogger register could be read. Check unit ID, address mode and firmware.",
+      "invalid_settings": "Enter a name and host, and valid downstream profiles. Each address must be 1–247, appear only once, and not conflict with the logger's direct unit ID.",
+      "already_configured": "This host, port and unit ID already have a connection.",
+      "invalid_selection": "The variable selection contains an unknown register. Refresh and select again."
+    }
+  }
+}
