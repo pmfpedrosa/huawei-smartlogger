@@ -137,3 +137,22 @@ async def test_reconfigure_preserves_identity_and_changes_endpoint(hass, snapsho
     assert existing.entry_id == original_id
     assert existing.data["host"] == "logger-c"
     assert existing.unique_id == "logger-c:502:0"
+
+
+async def test_complete_setup_flow_with_background_scan(hass, snapshots):
+    result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
+    assert result["step_id"] == "user"
+    result = await hass.config_entries.flow.async_configure(result["flow_id"], settings())
+    for _ in range(6):
+        if result["type"] == "form" and result["step_id"] == "variables":
+            break
+        await hass.async_block_till_done()
+        result = await hass.config_entries.flow.async_configure(result["flow_id"])
+    assert result["step_id"] == "variables"
+    with patch("custom_components.huawei_smartlogger.async_setup_entry", new=AsyncMock(return_value=True)):
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {"variables": [POWER, ENERGY], "refresh": False})
+        await hass.async_block_till_done()
+    assert result["type"] == "create_entry"
+    assert result["result"].data["host"] == "logger-a"
+    assert result["result"].options["variables"] == [POWER, ENERGY]

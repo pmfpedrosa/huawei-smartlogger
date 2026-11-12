@@ -52,11 +52,11 @@ class ModbusClient:
         async with self._lock:
             for attempt in range(self.retries + 1):
                 try:
+                    loop = asyncio.get_running_loop()
+                    delay = self.request_delay - (loop.time() - self._last_request)
+                    if delay > 0:
+                        await asyncio.sleep(delay)
                     async with asyncio.timeout(self.timeout):
-                        loop = asyncio.get_running_loop()
-                        delay = self.request_delay - (loop.time() - self._last_request)
-                        if delay > 0:
-                            await asyncio.sleep(delay)
                         if self._writer is None or self._writer.is_closing():
                             self._reader, self._writer = await asyncio.open_connection(self.host, self.port)
                         self._transaction = (self._transaction + 1) % 65536

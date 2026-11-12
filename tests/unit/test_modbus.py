@@ -105,6 +105,11 @@ class TransportTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(await self.client.read(0, 40525, 2), [0, 1])
         self.assertEqual(self.connections, 2)
 
+    async def test_request_spacing_does_not_consume_response_timeout(self):
+        self.client.request_delay = 0.15
+        self.assertEqual(await self.client.read(0, 40525, 2), [0, 1])
+        self.assertEqual(await self.client.read(0, 40525, 2), [0, 1])
+
     async def test_cancellation_closes_stream(self):
         self.mode = "timeout"
         task = asyncio.create_task(self.client.read(0, 40525, 2))

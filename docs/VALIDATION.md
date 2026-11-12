@@ -4,7 +4,7 @@ Version: 0.1.0-beta.1. Date: 2026-11-12.
 
 ## Local verification
 
-- 21 portable unit and asynchronous loopback TCP tests passed on Python 3.12.14 / Windows.
+- 22 portable unit and asynchronous loopback TCP tests passed on Python 3.12.14 / Windows.
 - Source tables extracted from the provided Huawei Issue 37 PDF: 83 logger, 12 EMI,
   44 meter, 5 public, 19 remapped inverter and 21 remapped EMI definitions.
 - Tests verify direct addressing, unit ID 0, fragmented TCP responses, protocol/transaction/
