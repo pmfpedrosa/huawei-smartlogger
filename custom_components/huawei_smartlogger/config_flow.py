@@ -67,9 +67,12 @@ class VariableSelection:
                 await gateway.close()
 
     async def async_step_scan(self, user_input=None):
-        if self._scan_task is None:
+        starting = self._scan_task is None
+        if starting:
             self._scan_task = self.hass.async_create_task(self._read_catalog())
-        if not self._scan_task.done():
+        # Always enter progress once, even if an eager task finishes immediately.
+        # Otherwise HA can forward the preceding form's input into the next step.
+        if starting or not self._scan_task.done():
             return self.async_show_progress(step_id="scan", progress_action="reading_registers",
                                             progress_task=self._scan_task)
         # Propagate unexpected programmer errors rather than hiding them as network errors.
