@@ -36,3 +36,20 @@ jobs:
           python-version: "3.14"
       - run: pip install pytest-homeassistant-custom-component
       - run: pytest -q
+  windows-emulator:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyinstaller==6.22.3
+      - run: python tools/build_emulator.py
+      - run: .\dist\SmartLoggerEmulator.exe --version
+      - run: python tools/smoke_emulator.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SmartLoggerEmulator-Windows-x64
+          path: |
+            dist/SmartLoggerEmulator.exe
+            dist/SmartLoggerEmulator-*-Windows-x64.zip
