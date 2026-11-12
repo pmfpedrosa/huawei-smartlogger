@@ -42,8 +42,8 @@ def snapshots():
 
 async def test_two_entries_and_selection_reload(hass, snapshots):
     first = entry(hass, "logger-a", [POWER, ENERGY])
-    second = entry(hass, "logger-b", [POWER])
     assert await hass.config_entries.async_setup(first.entry_id)
+    second = entry(hass, "logger-b", [POWER])
     assert await hass.config_entries.async_setup(second.entry_id)
     await hass.async_block_till_done()
     registry = er.async_get(hass)
@@ -66,8 +66,8 @@ async def test_two_entries_and_selection_reload(hass, snapshots):
 
 async def test_connection_failure_does_not_change_second_logger(hass, snapshots):
     first = entry(hass, "logger-a", [POWER])
-    second = entry(hass, "logger-b", [POWER])
     assert await hass.config_entries.async_setup(first.entry_id)
+    second = entry(hass, "logger-b", [POWER])
     assert await hass.config_entries.async_setup(second.entry_id)
     await hass.async_block_till_done()
     with patch.object(first.runtime_data.gateway, "snapshot", side_effect=ModbusError("offline")):
